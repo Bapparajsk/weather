@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<!--    <link rel="stylesheet" href="style.css">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Weather App</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lugrasimo&family=Rubik&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-size: 62.5%;
+            width: 100%;
+            height: 100%;
+            background-color: #f4e5e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /*create a weather card*/
+
+        #card {
+            width: 25rem;
+            height: 40rem;
+            background-color: white;
+            box-shadow: 0 0 20px 0 rgba(0,0,0,0.74);
+            overflow: hidden;
+        }
+
+        #weatericon {
+            width: 100%;
+            height: 25rem;
+            background-color: rgba(71, 174, 183, 0.99);
+        }
+
+        #icon {
+            width: 100%;
+            height: 18rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #icon i {
+            font-size: 7rem;
+            animation: icon 3s linear infinite;
+        }
+
+        @keyframes icon {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .main_contains {
+            width: 100%;
+            height: calc(100% - 25rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .Deletes {
+            width: 100%;
+            height: 8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /*background-color: #4f7b7b;*/
+        }
+
+        .cityName {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        #timesAndDate {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .temp {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .minmax {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div id="card">
+        <div id="weatericon">
+            <div id="icon">
+                <i class="fa-solid fa-cloud"></i>
+            </div>
+        </div>
+        <div class="main_contains" id="he">
+            <div class="Deletes">
+                <p class="cityName">Murshidabad</p>
+                <p id="timesAndDate"></p>
+            </div>
+            <div class="Deletes">
+                <div class="temp">
+                    <span id="temp">{%tempval%}</span><sup>o</sup><span>C</span>
+                </div>
+                <div class="minmax">
+                    <p id="temp_min_max">Max {%tempmax%} | Min {%tempmin%}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    const timesAndDate = document.getElementById("timesAndDate");
+    const status = document.getElementById("icon");
+    let tempStatus = "{%tempstatus%}"
+    const now = new Date();
+    const day = () => {
+
+        const dayes = ["SUN","MON","TUE","WED","THU","TIR","SAT"];
+        const month = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+
+        let toDey = dayes[now.getDay()];
+        let toMonth = month[now.getMonth()];
+        return `${toDey} | ${toMonth} ${now.getDate()} |`;
+    }
+
+    const time = () => {
+
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let p = "AM";
+
+        if (hours > 11) {
+            p = "PM";
+            if (hours > 12) {
+                hours -= 12;
+            }
+        }
+
+        if (hours < 10) {
+            hours = `0${hours}`;
+        }
+        if (minutes < 10) {
+            minutes = `0${minutes}`;
+        }
+
+        return ` ${hours} | ${minutes}`;
+    }
+
+    let newDates = `${day()} ${time()}`
+    timesAndDate.innerText = newDates;
+
+    switch (tempStatus) {
+        case "Sunny" :
+            status.innerHTML = `<i class="fa-solid fa-sun" style="color: #f2f27a"></i>`;
+            break;
+        case "Clouds" :
+            status.innerHTML = `<i class="fa-solid fa-cloud" style="color: #5353bb"></i>`;
+            break;
+        case "Rainy" :
+            status.innerHTML = `<i class="fa-solid fa-cloud-rain" style="color: #808080FF"></i>`;
+            break;
+        default:
+            status.innerHTML = `<i class="fa-solid fa-sun" style="color: #f2f27a"></i>`;
+    }
+
+</script>
+</body>
+</html>
